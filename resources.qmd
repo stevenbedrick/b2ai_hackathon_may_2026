@@ -3,6 +3,7 @@ title: "Dataset Resources"
 format: html
 ---
 
+- [Hackathon Logistics Presentation](static/hackathon_overall_overview.pdf) 
 - [Online Background Courses](https://wustl-catalog.instructure.com/courses/850/modules)
   - A full curriculum of online lectures about:
     - The Bridge2AI Voice Biomarker project
@@ -43,11 +44,11 @@ The TSV files have their columns in _alphabetical order_, not in the order that 
 
 ### Let's talk about sex
 
-There are two columns attempting to capture information about participant's sex at birth; it's a long story, but the one you _probably_ want to use is `sex_at_birth`:
+There are two columns attempting to capture information about participant's sex at birth; the details are a very long story, but the one you _probably_ want to use is `sex_at_birth`. See below for a cross-tabulation of what is in the actual dataset:
 
 
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, warning=FALSE,message=FALSE}
 
 library(tidyverse)
 library(gt)
@@ -66,6 +67,6 @@ demographics <- read_tsv(
 demographics %>% 
   select(sex_at_birth, sex_assigned_at_birth) %>% 
   group_by(sex_at_birth, sex_assigned_at_birth) %>% 
-  tally()
-
+  tally() %>% ungroup() %>% gt %>% sub_missing(missing_text = md("_NA_"))
+ 
 ```
